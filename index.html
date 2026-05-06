@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Financeiro - Conclusão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <h2>Formatura <span class="highlight">2026</span></h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="dashboard">
+                    <i class="fas fa-chart-pie"></i> Dashboard
+                </button>
+                <button class="nav-btn" data-target="turma-a">
+                    <i class="fas fa-users"></i> 9º Ano A
+                </button>
+                <button class="nav-btn" data-target="turma-b">
+                    <i class="fas fa-users"></i> 9º Ano B
+                </button>
+                <button class="nav-btn" data-target="financeiro">
+                    <i class="fas fa-wallet"></i> Financeiro Geral
+                </button>
+                <button class="nav-btn" data-target="listas-pagamento">
+                    <i class="fas fa-list-check"></i> Listas de Pagamento
+                </button>
+                <button class="nav-btn" data-target="configuracoes">
+                    <i class="fas fa-cog"></i> Configurações
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-title" id="page-title">Dashboard Resumo</div>
+                <div class="topbar-actions">
+                    <button class="btn btn-primary topbar-save-btn" onclick="manualSaveToGithub()">
+                        <i class="fas fa-floppy-disk"></i> Salvar
+                    </button>
+                    <div class="sync-status" id="sync-status">
+                        <i class="fas fa-cloud-arrow-down"></i> Local
+                    </div>
+                </div>
+            </header>
+
+            <!-- Views -->
+            <div class="view-container">
+                <!-- Dashboard View -->
+                <section id="dashboard" class="view active">
+                    <div class="summary-cards">
+                        <div class="card glass-card">
+                            <div class="card-icon income"><i class="fas fa-arrow-up"></i></div>
+                            <div class="card-info">
+                                <h3>Total Arrecadado</h3>
+                                <p id="total-income">R$ 0,00</p>
+                            </div>
+                        </div>
+                        <div class="card glass-card">
+                            <div class="card-icon expense"><i class="fas fa-arrow-down"></i></div>
+                            <div class="card-info">
+                                <h3>Total Despesas</h3>
+                                <p id="total-expense">R$ 0,00</p>
+                            </div>
+                        </div>
+                        <div class="card glass-card">
+                            <div class="card-icon balance"><i class="fas fa-wallet"></i></div>
+                            <div class="card-info">
+                                <h3>Saldo Atual</h3>
+                                <p id="total-balance">R$ 0,00</p>
+                            </div>
+                        </div>
+                        <div class="card glass-card">
+                            <div class="card-icon progress"><i class="fas fa-chart-line"></i></div>
+                            <div class="card-info">
+                                <h3>Parcelas Pagas (Geral)</h3>
+                                <p id="total-installments-count">0 / 0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-section">
+                        <div class="glass-panel">
+                            <h3>Progresso de Arrecadação por Turma</h3>
+                            <div class="progress-container">
+                                <label>9º Ano A</label>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" id="progress-a" style="width: 0%;">0%</div>
+                                </div>
+                            </div>
+                            <div class="progress-container mt-3">
+                                <label>9º Ano B</label>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" id="progress-b" style="width: 0%;">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Turma A View -->
+                <section id="turma-a" class="view">
+                    <div class="view-header">
+                        <h2>Controle de Parcelas - 9º Ano A</h2>
+                        <div class="view-actions">
+                            <span class="class-summary" id="summary-a">0/0 Pagas</span>
+                        </div>
+                    </div>
+                    <div class="class-tabs" id="class-tabs-a"></div>
+                    <div class="table-container glass-panel">
+                        <table class="students-table">
+                            <thead>
+                                <tr id="table-head-a">
+                                    <th>Aluno</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-a">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Turma B View -->
+                <section id="turma-b" class="view">
+                    <div class="view-header">
+                        <h2>Controle de Parcelas - 9º Ano B</h2>
+                        <div class="view-actions">
+                            <span class="class-summary" id="summary-b">0/0 Pagas</span>
+                        </div>
+                    </div>
+                    <div class="class-tabs" id="class-tabs-b"></div>
+                    <div class="table-container glass-panel">
+                        <table class="students-table">
+                            <thead>
+                                <tr id="table-head-b">
+                                    <th>Aluno</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-b">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Financeiro View -->
+                <section id="financeiro" class="view">
+                    <div class="view-header">
+                        <h2>Lançamentos Diversos</h2>
+                        <button class="btn btn-primary" onclick="openTransactionModal()">
+                            <i class="fas fa-plus"></i> Novo Lançamento
+                        </button>
+                    </div>
+                    <div class="table-container glass-panel">
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Listas de Pagamento View -->
+                <section id="listas-pagamento" class="view">
+                    <div class="view-header">
+                        <h2>Listas de Pagamento por Turma</h2>
+                    </div>
+
+                    <div class="glass-panel payment-list-form-panel">
+                        <h3><i class="fas fa-plus-circle"></i> Criar Nova Lista</h3>
+                        <form id="payment-list-form">
+                            <div class="payment-list-form-grid">
+                                <div class="form-group">
+                                    <label>Nome da Lista</label>
+                                    <input type="text" id="list-name" placeholder="Ex: Fardas, Rifas, Viagem" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Turma</label>
+                                    <select id="list-turma" required>
+                                        <option value="turma-a">9º Ano A</option>
+                                        <option value="turma-b">9º Ano B</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantidade de Parcelas</label>
+                                    <input type="number" id="list-parts" min="1" max="60" value="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Valor de Cada Parcela (R$)</label>
+                                    <input type="number" id="list-part-value" min="0" step="0.01" value="0.00" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Criar Lista
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="payment-lists-container" class="payment-lists-container"></div>
+                </section>
+
+                <!-- Configurações View -->
+                <section id="configuracoes" class="view">
+                    <div class="view-header">
+                        <h2>Configurações do Sistema</h2>
+                    </div>
+                    <div class="config-grid">
+                        <div class="glass-panel config-panel">
+                            <h3><i class="fas fa-coins"></i> Parcelas</h3>
+                            <div class="form-group">
+                                <label>Quantidade de Parcelas</label>
+                                <input type="number" id="config-installments" min="1" max="24" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label>Valor da Parcela (R$)</label>
+                                <input type="number" id="config-value" min="0" step="0.01" value="50.00">
+                            </div>
+                            <button class="btn btn-primary" onclick="saveParcelConfig()">Salvar Parcelas</button>
+                            <small class="text-warning mt-2 d-block"><i class="fas fa-exclamation-triangle"></i> Atenção: Mudar a quantidade de parcelas pode afetar o histórico atual se diminuir o número.</small>
+                        </div>
+                        
+                        <div class="glass-panel config-panel">
+                            <h3><i class="fab fa-github"></i> Sincronização GitHub</h3>
+                            <p class="config-desc">Use o GitHub como banco de dados salvando em um arquivo `data.json` no seu repositório.</p>
+                            <div class="form-group">
+                                <label>Repositório (usuario/repo)</label>
+                                <input type="text" id="config-repo" placeholder="Ex: seu-usuario/dashboard-financeiro">
+                            </div>
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <input type="text" id="config-branch" value="main">
+                            </div>
+                            <div class="form-group">
+                                <label>Personal Access Token (PAT)</label>
+                                <input type="password" id="config-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary" onclick="saveGithubConfig()">Salvar Configurações</button>
+                                <button class="btn btn-secondary" onclick="syncFromGithub()"><i class="fas fa-sync"></i> Forçar Baixar</button>
+                                <button class="btn btn-secondary" onclick="openGithubSetupModal()"><i class="fas fa-wand-magic-sparkles"></i> Configuração Rápida</button>
+                            </div>
+                            <div id="github-status-msg" class="mt-2"></div>
+                        </div>
+                        
+                        <div class="glass-panel config-panel">
+                            <h3><i class="fas fa-database"></i> Backup Local</h3>
+                            <p class="config-desc">Exporte ou importe seus dados para um arquivo JSON no seu computador.</p>
+                            <div class="btn-group">
+                                <button class="btn btn-secondary" onclick="exportData()"><i class="fas fa-download"></i> Exportar</button>
+                                <label class="btn btn-primary mb-0" style="cursor: pointer;">
+                                    <i class="fas fa-upload"></i> Importar
+                                    <input type="file" id="import-file" style="display: none;" onchange="importData(event)" accept=".json">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h3 id="modal-title">Novo Lançamento</h3>
+                <span class="close-modal" onclick="closeTransactionModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="transaction-form">
+                    <input type="hidden" id="trans-id">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="trans-type">
+                            <option value="income">Entrada (+)</option>
+                            <option value="expense">Saída (-)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <input type="text" id="trans-desc" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Valor (R$)</label>
+                        <input type="number" id="trans-value" step="0.01" min="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data</label>
+                        <input type="date" id="trans-date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Salvar Lançamento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="payment-list-edit-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h3>Editar Lista de Pagamento</h3>
+                <span class="close-modal" onclick="closePaymentListEditModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="payment-list-edit-form">
+                    <input type="hidden" id="edit-list-id">
+                    <div class="form-group">
+                        <label>Nome da Lista</label>
+                        <input type="text" id="edit-list-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Turma</label>
+                        <select id="edit-list-turma" required>
+                            <option value="turma-a">9º Ano A</option>
+                            <option value="turma-b">9º Ano B</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de Parcelas</label>
+                        <input type="number" id="edit-list-parts" min="1" max="60" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Valor de Cada Parcela (R$)</label>
+                        <input type="number" id="edit-list-part-value" min="0" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="github-setup-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h3>Configuração Rápida GitHub</h3>
+                <span class="close-modal" onclick="closeGithubSetupModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p class="config-desc">Preencha uma vez. O token fica salvo só no navegador deste dispositivo.</p>
+                <form id="github-setup-form">
+                    <div class="form-group">
+                        <label>Repositório (usuario/repo)</label>
+                        <input type="text" id="setup-repo" placeholder="Ex: seu-usuario/dashboard-financeiro" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Branch</label>
+                        <input type="text" id="setup-branch" value="main" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Personal Access Token (PAT)</label>
+                        <input type="password" id="setup-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Salvar e Ativar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO DO GITHUB (COLOQUE SEUS DADOS AQUI)
+        // Atenção: Esta é uma forma simples (mas menos segura) de configurar.
+        // Como você informou que servirá "só para dados", pode colocar seu token aqui.
+        // Se estes campos forem preenchidos, eles substituirão o que for digitado na tela de configurações.
+        const HARDCODED_GITHUB_CONFIG = {
+            repo: "SEU_USUARIO/SEU_REPOSITORIO", // Ex: "arc/dashboard-formatura"
+            branch: "main",
+            token: "SEU_TOKEN_AQUI" // Ex: ghp_xxxxxxxxxxxxxxxxxxxx
+        };
+    </script>
+    <script src="github-db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
