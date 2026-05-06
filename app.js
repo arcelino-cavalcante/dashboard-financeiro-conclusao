@@ -80,6 +80,7 @@ async function initApp() {
     setupNavigation();
     setupModals();
     setupPaymentListForm();
+    registerServiceWorker();
     
     // Load local settings for GitHub
     loadGithubConfigUI();
@@ -88,6 +89,15 @@ async function initApp() {
     await loadData();
     
     renderApp();
+}
+
+function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return;
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+            console.warn('Service Worker não registrado:', err);
+        });
+    });
 }
 
 async function loadData() {
