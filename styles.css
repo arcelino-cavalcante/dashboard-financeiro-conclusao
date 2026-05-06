@@ -28,6 +28,9 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Typography */
@@ -48,6 +51,7 @@ h1, h2, h3, h4 {
 .app-container {
     display: flex;
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* Sidebar */
@@ -94,6 +98,7 @@ h1, h2, h3, h4 {
     display: flex;
     align-items: center;
     gap: 0.7rem;
+    touch-action: manipulation;
 }
 
 .nav-btn:hover {
@@ -114,11 +119,12 @@ h1, h2, h3, h4 {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    min-height: 100dvh;
 }
 
 /* Topbar */
 .topbar {
-    padding: 1rem 1.4rem;
+    padding: max(1rem, env(safe-area-inset-top)) 1.4rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -345,6 +351,7 @@ tr:hover td {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 .custom-checkbox input {
@@ -391,6 +398,7 @@ tr:hover td {
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
+    touch-action: manipulation;
 }
 
 .btn-primary {
@@ -668,7 +676,7 @@ tr:hover td {
     }
 
     .topbar {
-        padding: 0.85rem 0.9rem;
+        padding: max(0.85rem, env(safe-area-inset-top)) 0.9rem 0.85rem;
         gap: 0.6rem;
     }
 
