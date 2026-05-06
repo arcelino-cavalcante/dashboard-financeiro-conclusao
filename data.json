@@ -1,7 +1,7 @@
 {
   "config": {
     "installments": 10,
-    "installmentValue": 50
+    "installmentValue": 30
   },
   "students": {
     "turma-a": [
