@@ -71,6 +71,9 @@ const classTabState = {
     'turma-a': 'base',
     'turma-b': 'base'
 };
+const GITHUB_OWNER = 'arcelino-cavalcante';
+const GITHUB_REPO = 'dashboard-financeiro-conclusao';
+const GITHUB_BRANCH = 'main';
 
 // --- Initialization ---
 async function initApp() {
@@ -287,8 +290,6 @@ function closePaymentListEditModal() {
 
 function openGithubSetupModal() {
     const ghConf = getGithubConfig();
-    document.getElementById('setup-repo').value = ghConf?.repo || '';
-    document.getElementById('setup-branch').value = ghConf?.branch || 'main';
     document.getElementById('setup-token').value = ghConf?.token || '';
     document.getElementById('github-setup-modal').classList.add('active');
 }
@@ -300,16 +301,14 @@ function closeGithubSetupModal() {
 async function handleGithubSetupSubmit(e) {
     e.preventDefault();
 
-    const repo = document.getElementById('setup-repo').value.trim();
-    const branch = (document.getElementById('setup-branch').value.trim() || 'main');
     const token = document.getElementById('setup-token').value.trim();
 
-    if (!repo || !token) {
-        alert('Preencha repositório e token.');
+    if (!token) {
+        alert('Preencha o token.');
         return;
     }
 
-    persistGithubConfig(repo, branch, token);
+    persistGithubConfig(token);
     closeGithubSetupModal();
     document.getElementById('github-status-msg').innerHTML = `<span style="color: var(--income-color)"><i class="fas fa-check"></i> Configuração rápida salva.</span>`;
     await loadData();
@@ -833,22 +832,18 @@ function saveParcelConfig() {
 
 function loadGithubConfigUI() {
     const ghConf = getGithubConfig();
-    document.getElementById('config-repo').value = ghConf?.repo || '';
-    document.getElementById('config-branch').value = ghConf?.branch || 'main';
     document.getElementById('config-token').value = ghConf?.token || '';
 }
 
 async function saveGithubConfig() {
-    const repo = document.getElementById('config-repo').value.trim();
-    const branch = (document.getElementById('config-branch').value.trim() || 'main');
     const token = document.getElementById('config-token').value.trim();
     
-    if(!repo || !token) {
-        alert("Preencha o repositório e o token para ativar a sincronização.");
+    if(!token) {
+        alert("Preencha o token para ativar a sincronização.");
         return;
     }
     
-    persistGithubConfig(repo, branch, token);
+    persistGithubConfig(token);
     
     document.getElementById('github-status-msg').innerHTML = `<span style="color: var(--income-color)"><i class="fas fa-check"></i> Configurações do GitHub salvas. Tentando baixar dados...</span>`;
     
@@ -857,29 +852,24 @@ async function saveGithubConfig() {
 }
 
 function getGithubConfig() {
-    // 1. Tenta usar os dados diretamente do HTML se o usuário preencheu o token
-    if (typeof HARDCODED_GITHUB_CONFIG !== 'undefined' &&
-        HARDCODED_GITHUB_CONFIG.token && 
-        HARDCODED_GITHUB_CONFIG.token !== "SEU_TOKEN_AQUI" &&
-        HARDCODED_GITHUB_CONFIG.repo &&
-        HARDCODED_GITHUB_CONFIG.repo !== "SEU_USUARIO/SEU_REPOSITORIO") {
-        return HARDCODED_GITHUB_CONFIG;
-    }
-
-    // 2. Fallback: usa os dados do localStorage (salvos pela interface)
     const raw = localStorage.getItem('ghConfig');
-    return raw ? JSON.parse(raw) : null;
+    const localConf = raw ? JSON.parse(raw) : null;
+    const token = localConf?.token || '';
+    if (!token) return null;
+    return {
+        repo: `${GITHUB_OWNER}/${GITHUB_REPO}`,
+        branch: GITHUB_BRANCH,
+        token
+    };
 }
 
 function isGithubConfigured() {
     const ghConf = getGithubConfig();
-    return Boolean(ghConf?.repo && ghConf?.token);
+    return Boolean(ghConf?.token);
 }
 
-function persistGithubConfig(repo, branch, token) {
-    localStorage.setItem('ghConfig', JSON.stringify({ repo, branch, token }));
-    document.getElementById('config-repo').value = repo;
-    document.getElementById('config-branch').value = branch;
+function persistGithubConfig(token) {
+    localStorage.setItem('ghConfig', JSON.stringify({ token }));
     document.getElementById('config-token').value = token;
 }
 

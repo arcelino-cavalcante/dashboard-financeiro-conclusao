@@ -237,15 +237,7 @@
                         
                         <div class="glass-panel config-panel">
                             <h3><i class="fab fa-github"></i> Sincronização GitHub</h3>
-                            <p class="config-desc">Use o GitHub como banco de dados salvando em um arquivo `data.json` no seu repositório.</p>
-                            <div class="form-group">
-                                <label>Repositório (usuario/repo)</label>
-                                <input type="text" id="config-repo" placeholder="Ex: seu-usuario/dashboard-financeiro">
-                            </div>
-                            <div class="form-group">
-                                <label>Branch</label>
-                                <input type="text" id="config-branch" value="main">
-                            </div>
+                            <p class="config-desc">Destino fixo: <strong>arcelino-cavalcante/dashboard-financeiro-conclusao</strong> na branch <strong>main</strong>.</p>
                             <div class="form-group">
                                 <label>Personal Access Token (PAT)</label>
                                 <input type="password" id="config-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
@@ -354,14 +346,6 @@
                 <p class="config-desc">Preencha uma vez. O token fica salvo só no navegador deste dispositivo.</p>
                 <form id="github-setup-form">
                     <div class="form-group">
-                        <label>Repositório (usuario/repo)</label>
-                        <input type="text" id="setup-repo" placeholder="Ex: seu-usuario/dashboard-financeiro" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Branch</label>
-                        <input type="text" id="setup-branch" value="main" required>
-                    </div>
-                    <div class="form-group">
                         <label>Personal Access Token (PAT)</label>
                         <input type="password" id="setup-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" required>
                     </div>
@@ -371,17 +355,6 @@
         </div>
     </div>
 
-    <script>
-        // CONFIGURAÇÃO DO GITHUB (COLOQUE SEUS DADOS AQUI)
-        // Atenção: Esta é uma forma simples (mas menos segura) de configurar.
-        // Como você informou que servirá "só para dados", pode colocar seu token aqui.
-        // Se estes campos forem preenchidos, eles substituirão o que for digitado na tela de configurações.
-        const HARDCODED_GITHUB_CONFIG = {
-            repo: "SEU_USUARIO/SEU_REPOSITORIO", // Ex: "arc/dashboard-formatura"
-            branch: "main",
-            token: "SEU_TOKEN_AQUI" // Ex: ghp_xxxxxxxxxxxxxxxxxxxx
-        };
-    </script>
     <script src="github-db.js"></script>
     <script src="app.js"></script>
 </body>
